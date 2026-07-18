@@ -1,6 +1,6 @@
 # Axiom_Skills
 
-个人维护的 AI Agent Skills 集合，面向**Codex**， **Cursor** 与 **Claude Code**。
+个人维护的 AI Agent Skills 集合，面向**Codex**,**Cursor** 与 **Claude Code**。
 
 每个 skill 是一个独立目录，核心文件是 `SKILL.md`。Agent 会按描述自动匹配，或在你显式引用时加载。
 
