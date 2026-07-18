@@ -1,0 +1,352 @@
+{
+  "version": 1,
+  "default_category": "互联网与科技趋势",
+  "sources": {
+    "ai-newsletters": {
+      "name": "AI Newsletters",
+      "kind": "auto",
+      "collector": "rss_bundle",
+      "labels": ["analysis", "trigger"],
+      "feeds": [
+        {"name": "TLDR AI", "url": "https://bullrich.dev/tldr-rss/ai.rss"},
+        {"name": "The Rundown AI", "url": "https://rss.beehiiv.com/feeds/2R3C6Bt5wj.xml"}
+      ],
+      "description": "AI newsletter feeds for model, agent, product, and workflow updates."
+    },
+    "ai-products": {
+      "name": "AI Products",
+      "kind": "auto",
+      "collector": "ai_products",
+      "labels": ["analysis", "trigger", "product"],
+      "feeds": [
+        {"name": "Product Hunt", "url": "https://www.producthunt.com/feed"},
+        {"name": "GitHub Trending Python", "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml"},
+        {"name": "Techmeme", "url": "https://www.techmeme.com/feed.xml"}
+      ],
+      "description": "Product-launch oriented bundle using Product Hunt RSS, Show HN, GitHub Trending, and Techmeme."
+    },
+    "hackernews": {
+      "name": "Hacker News",
+      "kind": "auto",
+      "collector": "hackernews",
+      "labels": ["community", "trigger"],
+      "description": "HN top stories for auto discovery and Algolia story search for topic mode."
+    },
+    "arxiv": {
+      "name": "arXiv",
+      "kind": "auto",
+      "collector": "arxiv",
+      "requires_topic": true,
+      "labels": ["primary", "research"],
+      "description": "arXiv Atom API for technical and academic grounding."
+    },
+    "techmeme": {
+      "name": "Techmeme",
+      "kind": "auto",
+      "collector": "rss",
+      "url": "https://www.techmeme.com/feed.xml",
+      "labels": ["analysis", "trigger"],
+      "description": "Technology and business news feed."
+    },
+    "producthunt-rss": {
+      "name": "Product Hunt RSS",
+      "kind": "auto",
+      "collector": "rss",
+      "url": "https://www.producthunt.com/feed",
+      "labels": ["analysis", "trigger", "product"],
+      "description": "Public Product Hunt RSS feed."
+    },
+    "github-trending": {
+      "name": "GitHub Trending",
+      "kind": "auto",
+      "collector": "rss",
+      "url": "https://mshibanami.github.io/GitHubTrendingRSS/daily/python.xml",
+      "labels": ["primary", "trigger", "code"],
+      "description": "Daily GitHub Trending RSS for open-source projects."
+    },
+    "global-search": {
+      "name": "Zhihu Global Search",
+      "kind": "credentialed",
+      "collector": "zhihu_global",
+      "requires_env": ["ZHIHU_ACCESS_SECRET"],
+      "requires_topic": true,
+      "labels": ["analysis", "community"],
+      "description": "Zhihu OpenAPI global web search."
+    },
+    "zhihu-search": {
+      "name": "Zhihu Search",
+      "kind": "credentialed",
+      "collector": "zhihu_search",
+      "requires_env": ["ZHIHU_ACCESS_SECRET"],
+      "requires_topic": true,
+      "labels": ["analysis", "community"],
+      "description": "Zhihu OpenAPI in-site search."
+    },
+    "hot-list": {
+      "name": "Zhihu Hot List",
+      "kind": "credentialed",
+      "collector": "zhihu_hot",
+      "requires_env": ["ZHIHU_ACCESS_SECRET"],
+      "labels": ["community", "trigger"],
+      "description": "Zhihu OpenAPI hot list."
+    },
+    "producthunt-api": {
+      "name": "Product Hunt API",
+      "kind": "credentialed",
+      "collector": "producthunt_api",
+      "requires_any_env_sets": [
+        ["PRODUCTHUNT_ACCESS_TOKEN"],
+        ["PRODUCTHUNT_API_KEY", "PRODUCTHUNT_API_SECRET"]
+      ],
+      "labels": ["primary", "product", "trigger"],
+      "description": "Official Product Hunt GraphQL API using PRODUCTHUNT_ACCESS_TOKEN or client credentials."
+    },
+    "blockbeats-skill": {
+      "name": "BlockBeats Search and News",
+      "kind": "credentialed",
+      "collector": "blockbeats_search",
+      "requires_env": ["BLOCKBEATS_API_KEY"],
+      "labels": ["analysis", "trigger", "market"],
+      "description": "BlockBeats crypto news, search, and article API."
+    },
+    "blockbeats-market": {
+      "name": "BlockBeats Market Data",
+      "kind": "credentialed",
+      "collector": "blockbeats_market",
+      "requires_env": ["BLOCKBEATS_API_KEY"],
+      "labels": ["primary", "market"],
+      "description": "BlockBeats market, ETF, stablecoin, and on-chain data endpoints."
+    },
+    "blockbeats-macro": {
+      "name": "BlockBeats Macro Data",
+      "kind": "credentialed",
+      "collector": "blockbeats_macro",
+      "requires_env": ["BLOCKBEATS_API_KEY"],
+      "labels": ["primary", "macro"],
+      "description": "BlockBeats M2, US10Y, DXY, and compliant exchange asset endpoints."
+    },
+    "folo": {
+      "name": "Folo",
+      "kind": "credentialed",
+      "collector": "folo_trending",
+      "requires_env": ["FOLO_TOKEN"],
+      "requires_cli": ["npx"],
+      "labels": ["analysis", "rss"],
+      "description": "Folo RSS reader trending/search timeline via folocli."
+    },
+    "last30days": {
+      "name": "last30days",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Deep recent-community research across Reddit, X, YouTube, TikTok, HN, GitHub, Polymarket, and the web."
+    },
+    "twitter-cli": {
+      "name": "Twitter/X",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Twitter/X search and account research; requires twitter-cli authentication."
+    },
+    "blogwatcher": {
+      "name": "Blogwatcher",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Subscribed blog and RSS monitoring via blogwatcher-cli."
+    },
+    "xiaohongshu": {
+      "name": "Xiaohongshu",
+      "kind": "manual",
+      "collector": "manual",
+      "description": "RedNote/Xiaohongshu search, trend, note details, and comments; requires MCP service and login."
+    },
+    "youtube-content": {
+      "name": "YouTube Content",
+      "kind": "manual",
+      "collector": "manual",
+      "description": "YouTube transcripts and summaries; requires a specific YouTube URL or video ID."
+    },
+    "watch": {
+      "name": "Watch",
+      "kind": "manual",
+      "collector": "manual",
+      "description": "Video URL/local video analysis with transcripts and frames."
+    },
+    "wechat-article-extractor": {
+      "name": "WeChat Article Extractor",
+      "kind": "manual",
+      "collector": "manual",
+      "description": "Extract metadata and content from provided mp.weixin.qq.com article URLs."
+    },
+    "mptext-wechat-article-fetcher": {
+      "name": "MPText WeChat Fetcher",
+      "kind": "manual",
+      "collector": "manual",
+      "description": "Search/fetch WeChat official account articles with an MPText API key."
+    },
+    "read-arxiv-paper": {
+      "name": "Read arXiv Paper",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Full arXiv source reading after a specific paper is selected."
+    },
+    "research": {
+      "name": "Research Coordinator",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Multi-agent deep research workflow for complex topics."
+    },
+    "producthunt-comments": {
+      "name": "Product Hunt Comments",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Comment-level product research through Product Hunt API after selecting a post."
+    },
+    "polymarket-last30days": {
+      "name": "Polymarket via last30days",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Prediction-market angle through last30days Polymarket support."
+    },
+    "blockbeats-hyperliquid": {
+      "name": "Hyperliquid via BlockBeats",
+      "kind": "deep",
+      "collector": "manual",
+      "description": "Hyperliquid/on-chain follow-up through BlockBeats endpoints."
+    }
+  },
+  "categories": [
+    {
+      "name": "AI与智能体相关",
+      "keywords": ["AI", "智能体", "agent", "agents", "LLM", "大模型", "模型", "Claude", "OpenAI", "自动化", "workflow", "智能工作流"],
+      "query_expansions": ["AI agent workflow", "LLM agents", "AI automation", "智能体 工作流"],
+      "primary": ["ai-newsletters", "ai-products", "hackernews", "arxiv", "techmeme"],
+      "secondary": ["producthunt-rss", "github-trending", "youtube-content", "last30days"],
+      "deep": ["read-arxiv-paper", "twitter-cli", "blogwatcher"]
+    },
+    {
+      "name": "Web3相关",
+      "keywords": ["Web3", "crypto", "区块链", "比特币", "以太坊", "DeFi", "链上", "稳定币", "Polymarket", "Hyperliquid", "空投"],
+      "query_expansions": ["crypto market", "on-chain trends", "DeFi", "Web3"],
+      "primary": ["blockbeats-skill", "last30days", "twitter-cli"],
+      "secondary": ["hackernews", "producthunt-rss", "techmeme"],
+      "deep": ["polymarket-last30days", "blockbeats-hyperliquid"]
+    },
+    {
+      "name": "经济主题",
+      "keywords": ["经济", "宏观", "M2", "利率", "美元", "通胀", "就业", "央行", "流动性", "市场", "金融"],
+      "query_expansions": ["macro economy", "liquidity", "interest rates", "经济 宏观"],
+      "primary": ["techmeme", "blockbeats-macro", "global-search", "hot-list"],
+      "secondary": ["last30days", "folo", "blogwatcher"],
+      "deep": ["twitter-cli", "zhihu-search"]
+    },
+    {
+      "name": "个人成长与认知",
+      "keywords": ["个人成长", "认知", "习惯", "复盘", "心智", "自我管理", "长期主义", "注意力", "效率", "内耗"],
+      "query_expansions": ["个人成长 认知", "self improvement cognition", "习惯 复盘"],
+      "primary": ["zhihu-search", "global-search", "xiaohongshu", "youtube-content"],
+      "secondary": ["folo", "blogwatcher", "last30days"]
+    },
+    {
+      "name": "产品思维",
+      "keywords": ["产品", "产品经理", "用户体验", "MVP", "需求", "增长", "留存", "用户研究", "PMF", "产品思维"],
+      "query_expansions": ["product thinking", "product management", "MVP PMF", "产品思维"],
+      "primary": ["producthunt-rss", "ai-products", "hackernews", "zhihu-search"],
+      "secondary": ["producthunt-api", "youtube-content", "last30days", "xiaohongshu"],
+      "deep": ["producthunt-comments", "twitter-cli"]
+    },
+    {
+      "name": "互联网与科技趋势",
+      "keywords": ["互联网", "科技趋势", "平台", "软件", "硬件", "创业公司", "SaaS", "开发者", "技术趋势", "科技"],
+      "query_expansions": ["technology trends", "internet trends", "developer tools", "科技趋势"],
+      "primary": ["hackernews", "techmeme", "github-trending", "ai-newsletters"],
+      "secondary": ["global-search", "hot-list", "folo", "blogwatcher"],
+      "deep": ["last30days", "twitter-cli"]
+    },
+    {
+      "name": "投资相关",
+      "keywords": ["投资", "资产", "估值", "ETF", "股票", "债券", "风险资产", "基金", "配置", "交易", "牛市", "熊市"],
+      "query_expansions": ["investment strategy", "risk assets", "market liquidity", "投资 市场"],
+      "primary": ["blockbeats-market", "blockbeats-macro", "techmeme", "global-search"],
+      "secondary": ["last30days", "zhihu-search", "folo"],
+      "deep": ["twitter-cli", "polymarket-last30days"]
+    },
+    {
+      "name": "职业发展",
+      "keywords": ["职业", "求职", "面试", "offer", "职场", "转行", "简历", "晋升", "远程工作", "职业规划"],
+      "query_expansions": ["career growth", "job search", "面试 职业发展"],
+      "primary": ["zhihu-search", "global-search", "hackernews", "youtube-content"],
+      "secondary": ["xiaohongshu", "last30days", "folo"]
+    },
+    {
+      "name": "商业与创业",
+      "keywords": ["商业", "创业", "公司", "融资", "商业模式", "增长", "市场", "创始人", "SaaS", "独立开发"],
+      "query_expansions": ["startup", "business model", "founder", "创业 商业模式"],
+      "primary": ["producthunt-rss", "techmeme", "hackernews", "global-search"],
+      "secondary": ["ai-products", "producthunt-api", "zhihu-search", "folo"],
+      "deep": ["twitter-cli", "blogwatcher"]
+    },
+    {
+      "name": "技术分享",
+      "keywords": ["技术", "编程", "开发", "架构", "工程", "开源", "代码", "教程", "API", "数据库", "前端", "后端"],
+      "query_expansions": ["software engineering", "developer tools", "architecture", "技术分享"],
+      "primary": ["hackernews", "github-trending", "arxiv", "youtube-content"],
+      "secondary": ["blogwatcher", "folo", "global-search"],
+      "deep": ["read-arxiv-paper", "watch"]
+    },
+    {
+      "name": "哲学与思辨",
+      "keywords": ["哲学", "思辨", "意义", "伦理", "自由意志", "现代性", "存在", "价值观", "思想", "社会理论"],
+      "query_expansions": ["philosophy", "ethics", "现代性 哲学", "思辨"],
+      "primary": ["global-search", "zhihu-search", "youtube-content", "folo"],
+      "secondary": ["blogwatcher", "last30days"],
+      "deep": ["wechat-article-extractor", "mptext-wechat-article-fetcher"]
+    },
+    {
+      "name": "社会观察",
+      "keywords": ["社会", "公共议题", "热点", "舆论", "城市", "青年", "文化现象", "政策", "人口", "教育公平"],
+      "query_expansions": ["社会观察", "公共议题", "舆论 热点"],
+      "primary": ["hot-list", "global-search", "zhihu-search", "xiaohongshu"],
+      "secondary": ["last30days", "folo", "youtube-content"],
+      "deep": ["wechat-article-extractor", "twitter-cli"]
+    },
+    {
+      "name": "生活方式",
+      "keywords": ["生活方式", "消费", "家居", "健康", "运动", "饮食", "效率", "穿搭", "情绪", "日常"],
+      "query_expansions": ["生活方式", "lifestyle", "健康 运动 饮食"],
+      "primary": ["xiaohongshu", "zhihu-search", "global-search", "youtube-content"],
+      "secondary": ["folo", "last30days"],
+      "deep": ["wechat-article-extractor"]
+    },
+    {
+      "name": "审美与文化",
+      "keywords": ["审美", "文化", "设计", "艺术", "电影", "音乐", "摄影", "时尚", "城市美学", "展览"],
+      "query_expansions": ["审美 文化", "design culture", "art trends"],
+      "primary": ["xiaohongshu", "youtube-content", "global-search", "zhihu-search"],
+      "secondary": ["folo", "blogwatcher", "wechat-article-extractor"],
+      "deep": ["mptext-wechat-article-fetcher"]
+    },
+    {
+      "name": "旅行与城市",
+      "keywords": ["旅行", "城市", "目的地", "路线", "城市更新", "城市观察", "旅居", "交通", "街区", "酒店"],
+      "query_expansions": ["旅行 城市", "city travel", "urban observation"],
+      "primary": ["xiaohongshu", "global-search", "zhihu-search", "youtube-content"],
+      "secondary": ["hot-list", "folo", "last30days"],
+      "deep": ["wechat-article-extractor"]
+    },
+    {
+      "name": "教育与学习系统",
+      "keywords": ["教育", "学习", "学习系统", "课程", "知识管理", "笔记", "AI 教育", "自学", "考试", "训练"],
+      "query_expansions": ["learning system", "education technology", "自学 学习系统"],
+      "primary": ["arxiv", "zhihu-search", "global-search", "youtube-content"],
+      "secondary": ["hackernews", "folo", "blogwatcher"],
+      "deep": ["read-arxiv-paper", "last30days"]
+    },
+    {
+      "name": "案例分析",
+      "keywords": ["案例", "复盘", "分析", "拆解", "失败", "成功", "增长案例", "产品案例", "商业案例", "项目复盘"],
+      "query_expansions": ["case study", "案例分析", "复盘 拆解"],
+      "primary": ["global-search", "hackernews", "techmeme", "producthunt-rss"],
+      "secondary": ["producthunt-api", "zhihu-search", "last30days", "folo", "blogwatcher"],
+      "deep": ["youtube-content", "wechat-article-extractor", "mptext-wechat-article-fetcher"]
+    }
+  ]
+}

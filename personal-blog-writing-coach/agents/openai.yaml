@@ -1,0 +1,4 @@
+interface:
+  display_name: "个人博客写作教练"
+  short_description: "Interview and draft sincere Chinese personal essays"
+  default_prompt: "Use $personal-blog-writing-coach to interview me before drafting a sincere first-person Chinese blog post."

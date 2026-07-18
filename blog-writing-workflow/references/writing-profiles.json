@@ -1,0 +1,396 @@
+{
+  "version": 2,
+  "global_rules": [
+    "先写出一条可辩论、可被证据支持的中心论点，再展开正文。",
+    "依赖外部或当前信息的事实在首次出现时使用行内 Markdown 链接。",
+    "时间敏感内容使用准确日期；证据较弱时使用早期信号、个案或尚待验证等有限措辞。",
+    "至少用一个段落呈现限制、反方证据或替代解释。",
+    "不得编造统计数字、测试结果、个人经历、采访内容或来源没有提供的事实。"
+  ],
+  "categories": {
+    "AI与智能体相关": {
+      "voice": "面向 AI builder 和产品实践者，技术准确、克制、重视真实工作流。",
+      "evidence_requirements": [
+        {"id": "primary_technical", "description": "官方技术资料、论文、代码或模型文档", "match_any": ["primary", "research", "code", "arxiv", "github"]},
+        {"id": "product_or_community", "description": "产品采用或开发者社区信号", "match_any": ["product", "community", "hackernews", "producthunt"]}
+      ],
+      "required_moves": ["区分能力演示、实际可用性与规模化采用", "说明能力边界、失败条件或采用阻力"],
+      "prohibited_moves": ["把模型或智能体拟人化", "使用革命性、颠覆一切等无证据宣传语"],
+      "action_style": "给出低成本实验、评估指标和停止条件。",
+      "risk_disclosure": "说明模型错误、数据安全、成本或人工监督边界。",
+      "validation_checks": [
+        {"id": "limitations", "description": "包含能力边界或采用限制", "any_terms": ["边界", "限制", "失败", "采用阻力", "局限"]}
+      ]
+    },
+    "Web3相关": {
+      "voice": "数据优先、保持怀疑，明确区分协议事实、市场叙事和社区情绪。",
+      "evidence_requirements": [
+        {"id": "market_data", "description": "链上或市场数据", "match_any": ["market", "on-chain", "blockbeats-market", "primary"]},
+        {"id": "news_policy", "description": "新闻、监管或政策来源", "match_any": ["analysis", "trigger", "policy", "news"]},
+        {"id": "counter_signal", "description": "风险或反向信号", "match_any": ["risk", "counter", "failure", "bearish"]}
+      ],
+      "required_moves": ["区分链上数据、价格变化和叙事推断", "呈现风险或反向信号"],
+      "prohibited_moves": ["把价格预测写成事实", "提供个性化投资建议"],
+      "action_style": "提供观察指标、风险场景和验证条件，不给买卖指令。",
+      "risk_disclosure": "明确声明内容不构成投资建议，并提示波动、流动性、合约和监管风险。",
+      "validation_checks": [
+        {"id": "not_financial_advice", "description": "包含非投资建议声明", "any_terms": ["不构成投资建议", "非投资建议"]},
+        {"id": "risk", "description": "讨论具体风险", "any_terms": ["风险", "波动", "流动性", "监管"]}
+      ]
+    },
+    "经济主题": {
+      "voice": "分析性、时间敏感，先定义指标和观察窗口，再解释机制。",
+      "evidence_requirements": [
+        {"id": "official_data", "description": "官方或可信机构宏观数据", "match_any": ["macro", "primary", "data", "blockbeats-macro"]},
+        {"id": "context", "description": "新闻、政策或机构解释", "match_any": ["analysis", "policy", "news", "trigger"]}
+      ],
+      "required_moves": ["区分相关性与因果关系", "区分名义与实际、短期与长期变量"],
+      "prohibited_moves": ["用单个指标解释全部经济变化", "省略数据时间范围或基期"],
+      "action_style": "给出后续应跟踪的指标、时间窗口和替代解释。",
+      "risk_disclosure": "说明数据修订、滞后性和因果识别限制。",
+      "validation_checks": [
+        {"id": "causality", "description": "区分相关与因果或提供替代解释", "any_terms": ["相关", "因果", "替代解释"]},
+        {"id": "time_window", "description": "给出明确时间窗口", "any_terms": ["短期", "长期", "同比", "环比", "截至"]}
+      ]
+    },
+    "个人成长与认知": {
+      "voice": "克制、反思、可实践，尊重个体差异。",
+      "evidence_requirements": [
+        {"id": "research_or_discussion", "description": "研究或高质量社区讨论", "match_any": ["research", "community", "analysis"]},
+        {"id": "concrete_example", "description": "具体实践案例或第一人称材料", "match_any": ["case", "interview", "example", "community"]}
+      ],
+      "required_moves": ["把建议转成可验证的小实验", "说明建议适用和不适用的情境"],
+      "prohibited_moves": ["承诺普遍有效的改变", "用伪科学概念包装个人意见"],
+      "action_style": "给出小步骤、复盘问题和退出条件。",
+      "risk_disclosure": "说明个体差异，心理或医疗问题应寻求专业支持。",
+      "validation_checks": [
+        {"id": "context", "description": "说明适用情境或个体差异", "any_terms": ["适用", "不适用", "个体差异", "因人而异"]}
+      ]
+    },
+    "产品思维": {
+      "voice": "用户任务导向，关注取舍、摩擦和可验证价值。",
+      "evidence_requirements": [
+        {"id": "product_primary", "description": "产品或公司一手资料", "match_any": ["product", "primary", "producthunt"]},
+        {"id": "user_signal", "description": "用户或社区反馈", "match_any": ["community", "comments", "user"]},
+        {"id": "market_context", "description": "竞品或市场背景", "match_any": ["analysis", "market", "competitor"]}
+      ],
+      "required_moves": ["明确用户任务、使用场景和替代方案", "解释功能背后的收益与成本取舍"],
+      "prohibited_moves": ["按发布说明逐项罗列功能", "把产品方主张当成用户价值证明"],
+      "action_style": "给出用户验证问题、试用任务和成功指标。",
+      "risk_disclosure": "说明样本偏差、切换成本和产品方信息局限。",
+      "validation_checks": [
+        {"id": "tradeoff", "description": "讨论用户场景和取舍", "any_terms": ["用户", "场景", "取舍", "替代方案", "切换成本"]}
+      ]
+    },
+    "互联网与科技趋势": {
+      "voice": "冷静、机制导向，不把新闻热度等同于趋势。",
+      "evidence_requirements": [
+        {"id": "primary_signal", "description": "官方技术或产品一手信号", "match_any": ["primary", "code", "product", "research"]},
+        {"id": "adoption_signal", "description": "采用、社区或市场信号", "match_any": ["community", "market", "analysis", "trigger"]}
+      ],
+      "required_moves": ["区分发布、演示、采用和规模化", "提出反证、落地障碍或观察指标"],
+      "prohibited_moves": ["从单次发布推出确定的长期趋势", "省略技术或商业采用条件"],
+      "action_style": "给出趋势验证指标和下一次检查时间。",
+      "risk_disclosure": "说明来源偏向、幸存者偏差和采用数据缺口。",
+      "validation_checks": [
+        {"id": "adoption", "description": "区分发布与采用", "any_terms": ["发布", "演示", "采用", "规模化"]},
+        {"id": "counter_signal", "description": "包含反证或落地障碍", "any_terms": ["反证", "障碍", "限制", "尚未"]}
+      ]
+    },
+    "投资相关": {
+      "voice": "概率化、情景化，严格分开事实、假设和判断。",
+      "evidence_requirements": [
+        {"id": "filing_or_data", "description": "公告、财报或可信市场数据", "match_any": ["primary", "market", "data", "filing"]},
+        {"id": "thesis_context", "description": "支持与反对论点的背景材料", "match_any": ["analysis", "news", "community"]},
+        {"id": "counter_signal", "description": "风险、反方或失败情景", "match_any": ["risk", "counter", "failure", "bearish"]}
+      ],
+      "required_moves": ["列出核心假设、正反论点和失效条件", "区分事实数据与估值判断"],
+      "prohibited_moves": ["承诺收益", "提供个性化仓位、买卖点或确定性预测"],
+      "action_style": "提供情景矩阵、待验证变量和风险清单。",
+      "risk_disclosure": "明确声明不构成投资建议，投资可能造成损失。",
+      "validation_checks": [
+        {"id": "not_financial_advice", "description": "包含非投资建议声明", "any_terms": ["不构成投资建议", "非投资建议"]},
+        {"id": "risk", "description": "包含风险或失效条件", "any_terms": ["风险", "失效条件", "损失", "下行情景"]}
+      ]
+    },
+    "职业发展": {
+      "voice": "同理、具体但不许诺结果，承认行业和个人条件差异。",
+      "evidence_requirements": [
+        {"id": "labor_signal", "description": "招聘、劳动力市场或行业信号", "match_any": ["market", "data", "analysis", "jobs"]},
+        {"id": "practitioner_case", "description": "从业者经历或社区案例", "match_any": ["community", "interview", "case"]}
+      ],
+      "required_moves": ["标明建议适用的阶段、岗位和约束", "提供可执行验证动作"],
+      "prohibited_moves": ["保证求职、升职或转型结果", "把单个成功案例当成普遍路径"],
+      "action_style": "给出分阶段行动、反馈指标和备选路径。",
+      "risk_disclosure": "说明地区、行业周期、资历和个人资源差异。",
+      "validation_checks": [
+        {"id": "applicability", "description": "说明建议适用场景", "any_terms": ["适用", "阶段", "岗位", "行业", "地区"]}
+      ]
+    },
+    "商业与创业": {
+      "voice": "经营者视角，关注客户、现金流、单位经济和关键假设。",
+      "evidence_requirements": [
+        {"id": "company_primary", "description": "公司、产品或经营一手资料", "match_any": ["primary", "product", "filing", "company"]},
+        {"id": "customer_market", "description": "客户信号和市场背景", "match_any": ["community", "market", "analysis", "customer"]}
+      ],
+      "required_moves": ["明确客户、价值主张和关键经营假设", "讨论单位经济、执行风险或替代方案"],
+      "prohibited_moves": ["把融资或曝光当成商业成功", "用幸存者案例总结创业规律"],
+      "action_style": "给出可验证商业假设、实验成本和停止条件。",
+      "risk_disclosure": "说明数据不可得、幸存者偏差和执行条件。",
+      "validation_checks": [
+        {"id": "business_assumptions", "description": "讨论客户和经营假设", "any_terms": ["客户", "假设", "现金流", "单位经济", "成本"]}
+      ]
+    },
+    "技术分享": {
+      "voice": "工程化、精确、可复现，优先说明约束和失败模式。",
+      "evidence_requirements": [
+        {"id": "official_docs", "description": "官方文档、代码仓库或规范", "match_any": ["primary", "code", "github", "docs", "research"]},
+        {"id": "implementation_signal", "description": "实际实现、问题或社区验证", "match_any": ["community", "code", "example", "hackernews"]}
+      ],
+      "required_moves": ["列出环境、版本、前置条件和完整步骤", "提供验证方式、错误处理和已知失败模式"],
+      "prohibited_moves": ["提供未经核验的代码或命令", "省略会改变结果的版本和配置"],
+      "action_style": "以可复现步骤、预期输出和排错清单收束。",
+      "risk_disclosure": "说明兼容性、安全、性能和生产环境风险。",
+      "validation_checks": [
+        {"id": "environment_version", "description": "包含环境或版本信息", "any_terms": ["环境", "版本", "前置条件", "依赖"]},
+        {"id": "verification", "description": "包含验证或失败处理", "any_terms": ["验证", "预期输出", "失败", "排错", "错误"]}
+      ]
+    },
+    "哲学与思辨": {
+      "voice": "概念清晰、论证公平，允许开放结论。",
+      "evidence_requirements": [
+        {"id": "primary_text", "description": "原典、原始论述或可信学术来源", "match_any": ["primary", "research", "paper", "book"]},
+        {"id": "interpretation", "description": "不同解释或现实案例", "match_any": ["analysis", "counter", "case", "community"]}
+      ],
+      "required_moves": ["先定义核心概念", "呈现主要论点、最强反方和现实例子"],
+      "prohibited_moves": ["用抽象术语代替论证", "把价值判断伪装成事实"],
+      "action_style": "以判断问题、思想实验或开放问题收束。",
+      "risk_disclosure": "说明概念定义、解释传统和作者立场的局限。",
+      "validation_checks": [
+        {"id": "definition", "description": "定义核心概念", "any_terms": ["定义", "这里所说", "概念"]},
+        {"id": "counterargument", "description": "呈现反方论证", "any_terms": ["反方", "反驳", "另一种观点", "最强异议"]}
+      ]
+    },
+    "社会观察": {
+      "voice": "有同理心、重视语境，不把平台样本外推为所有人。",
+      "evidence_requirements": [
+        {"id": "official_context", "description": "官方数据或广泛社会背景", "match_any": ["primary", "data", "analysis", "policy"]},
+        {"id": "chinese_context", "description": "中文社会语境或社区材料", "match_any": ["zhihu", "xiaohongshu", "wechat", "community"]}
+      ],
+      "required_moves": ["区分观察、解释与普遍结论", "呈现不同群体、平台或地区的差异"],
+      "prohibited_moves": ["污名化群体", "用单个平台热帖代表整体社会"],
+      "action_style": "给出需要继续观察的样本、变量和公共问题。",
+      "risk_disclosure": "说明样本偏差、平台机制和不可见群体。",
+      "validation_checks": [
+        {"id": "sample_limits", "description": "说明样本或平台局限", "any_terms": ["样本", "平台", "局限", "不能代表", "不同群体"]}
+      ]
+    },
+    "生活方式": {
+      "voice": "温和、经验性、低强度建议，避免制造焦虑。",
+      "evidence_requirements": [
+        {"id": "credible_guidance", "description": "可靠研究、机构建议或社会背景", "match_any": ["primary", "research", "analysis", "official"]},
+        {"id": "lived_example", "description": "具体生活案例或社区经验", "match_any": ["community", "case", "example"]}
+      ],
+      "required_moves": ["把建议设计成可撤回的小实验", "涉及健康或安全时说明专业边界"],
+      "prohibited_moves": ["把个人经验写成普遍事实", "替代医疗、营养或心理专业建议"],
+      "action_style": "给出小实验、观察日志和停止条件。",
+      "risk_disclosure": "健康、安全或心理相关内容不替代专业意见。",
+      "validation_checks": [
+        {"id": "professional_boundary", "description": "健康安全主题包含专业边界", "any_terms": ["不替代专业", "咨询专业", "个体差异", "停止条件"]}
+      ]
+    },
+    "审美与文化": {
+      "voice": "解释性、尊重主观判断，同时提供作品和历史语境。",
+      "evidence_requirements": [
+        {"id": "primary_artifact", "description": "作品、展览、文本或文化材料本身", "match_any": ["primary", "artifact", "work", "source"]},
+        {"id": "historical_critical_context", "description": "历史、批评或不同解释", "match_any": ["analysis", "research", "criticism", "history"]}
+      ],
+      "required_moves": ["描述具体作品或形式细节", "区分事实背景、批评解释和个人判断"],
+      "prohibited_moves": ["把品味排序写成客观事实", "脱离历史和媒介语境下结论"],
+      "action_style": "提供观看、阅读或比较路径，而非统一审美答案。",
+      "risk_disclosure": "明确个人立场、材料范围和解释的不唯一性。",
+      "validation_checks": [
+        {"id": "subjectivity", "description": "区分事实与个人判断", "any_terms": ["我的判断", "个人观点", "一种解释", "并非唯一"]}
+      ]
+    },
+    "旅行与城市": {
+      "voice": "具体、具地方感且重视时效，不虚构亲历。",
+      "evidence_requirements": [
+        {"id": "official_current", "description": "官方实时交通、开放、签证或安全信息", "match_any": ["primary", "official", "policy", "travel"]},
+        {"id": "local_context", "description": "当地语境、居民或旅行者经验", "match_any": ["community", "xiaohongshu", "wechat", "local"]}
+      ],
+      "required_moves": ["标注核验日期、季节和可能变化的信息", "区分官方事实、社区经验和作者推断"],
+      "prohibited_moves": ["虚构到访经历", "对治安、开放时间或价格作永久保证"],
+      "action_style": "给出行前复核清单、替代路线和季节性选择。",
+      "risk_disclosure": "提示签证、交通、天气、安全和营业信息可能变化。",
+      "validation_checks": [
+        {"id": "freshness", "description": "标明日期或季节时效", "any_terms": ["截至", "核验日期", "季节", "可能变化", "出发前确认"]}
+      ]
+    },
+    "教育与学习系统": {
+      "voice": "证据导向、鼓励实践，尊重年龄、基础和情境差异。",
+      "evidence_requirements": [
+        {"id": "learning_research", "description": "学习科学、教育研究或可靠理论来源", "match_any": ["research", "primary", "paper", "education"]},
+        {"id": "learning_case", "description": "课堂、教师或学习者案例", "match_any": ["community", "case", "interview", "example"]}
+      ],
+      "required_moves": ["把原理转成可执行练习和反馈循环", "说明方法适用的学习者和情境"],
+      "prohibited_moves": ["宣称单一最佳学习法", "只讲概念而不给练习和反馈方式"],
+      "action_style": "给出练习、反馈指标、复习节奏和调整条件。",
+      "risk_disclosure": "说明研究外推限制和学习者差异。",
+      "validation_checks": [
+        {"id": "practice_feedback", "description": "包含练习和反馈机制", "any_terms": ["练习", "反馈", "复习", "调整"]},
+        {"id": "learner_context", "description": "说明学习者差异", "any_terms": ["学习者", "基础", "年龄", "情境", "个体差异"]}
+      ]
+    },
+    "案例分析": {
+      "voice": "法证式、时间线清晰，严格分开事实、推断和未知。",
+      "evidence_requirements": [
+        {"id": "primary_case", "description": "一手案例材料或事件时间线", "match_any": ["primary", "case", "official", "filing"]},
+        {"id": "external_interpretation", "description": "独立外部解释", "match_any": ["analysis", "news", "research"]},
+        {"id": "outcome_or_failure", "description": "可衡量结果或失败模式", "match_any": ["data", "metrics", "failure", "outcome"]}
+      ],
+      "required_moves": ["建立带日期的事实时间线", "分别标注事实、推断、未知和替代解释"],
+      "prohibited_moves": ["用结果倒推当时决策必然错误或正确", "把当事方陈述视为独立验证"],
+      "action_style": "总结可迁移判断、不可迁移条件和后续验证点。",
+      "risk_disclosure": "说明资料缺失、当事方偏差和事后偏见。",
+      "validation_checks": [
+        {"id": "epistemic_status", "description": "区分事实、推断和未知", "any_terms": ["事实", "推断", "未知", "尚无证据"]},
+        {"id": "timeline", "description": "包含时间线或明确日期", "any_terms": ["时间线", "截至", "年", "月", "日"]}
+      ]
+    }
+  },
+  "article_types": {
+    "how-to-guide": {
+      "purpose": "帮助读者完成一项有明确结果的任务。",
+      "minimum_length": 2500,
+      "recommended_max_length": 4000,
+      "headline_patterns": ["如何完成 X：一份可验证的实操指南", "从零到 X：步骤、检查点与常见错误"],
+      "outline": ["结果与适用对象", "前置条件", "分步方法", "验证结果", "常见错误与排错", "下一步"],
+      "required_elements": ["有序步骤", "前置条件", "成功验证", "常见错误"],
+      "visuals": ["流程图", "步骤截图或检查清单"],
+      "faq_style": "回答执行过程中最常见的阻塞问题。",
+      "conclusion_style": "用一份最短执行清单收束。"
+    },
+    "listicle": {
+      "purpose": "对多个选项进行有标准、有取舍的排序或分类。",
+      "minimum_length": 2000,
+      "recommended_max_length": 3200,
+      "headline_patterns": ["值得关注的 N 个 X：按场景选择", "N 个 X 实测维度：谁更适合什么人"],
+      "outline": ["选择标准", "快速结论表", "逐项评价", "横向取舍", "如何选择"],
+      "required_elements": ["明确入选标准", "每项最佳适用场景", "一致的评价维度", "不适合谁"],
+      "visuals": ["排名表或选择矩阵"],
+      "faq_style": "回答预算、场景和替代选项问题。",
+      "conclusion_style": "按读者场景给出分流推荐，不宣布绝对赢家。"
+    },
+    "case-study": {
+      "purpose": "从一个具体案例中解释过程、结果和可迁移经验。",
+      "minimum_length": 2200,
+      "recommended_max_length": 3500,
+      "headline_patterns": ["X 案例复盘：从问题到结果", "X 如何改变 Y：过程、结果与限制"],
+      "outline": ["背景与基线", "问题", "决策与实施", "结果", "失败与限制", "可迁移经验"],
+      "required_elements": ["时间线", "基线", "过程证据", "结果或失败模式", "迁移边界"],
+      "visuals": ["时间线", "前后对比图"],
+      "faq_style": "回答案例是否可复制及复制所需条件。",
+      "conclusion_style": "区分可复用原则与案例特有条件。"
+    },
+    "comparison": {
+      "purpose": "帮助读者在两个或三个可比选项之间作决定。",
+      "minimum_length": 2200,
+      "recommended_max_length": 3500,
+      "headline_patterns": ["X vs Y：按场景和成本选择", "X 与 Y 的真正差异：不只是功能表"],
+      "outline": ["比较范围与方法", "快速对照表", "逐维度比较", "成本与隐性成本", "按场景裁决", "限制"],
+      "required_elements": ["可比性说明", "统一评价维度", "来源一致的比较数据", "每个场景的明确选择"],
+      "visuals": ["横向比较表", "成本或性能图"],
+      "faq_style": "回答迁移、价格、兼容性和替代方案。",
+      "conclusion_style": "按使用场景给出裁决，不使用笼统的谁更好。"
+    },
+    "pillar-page": {
+      "purpose": "为宽主题建立可独立阅读、可继续深入的完整地图。",
+      "minimum_length": 3500,
+      "recommended_max_length": 6000,
+      "headline_patterns": ["X 完整指南：概念、方法、工具与案例", "理解 X：从基础到实践的系统地图"],
+      "outline": ["定义与边界", "核心组成", "工作机制", "主要方法", "工具与案例", "常见问题", "延伸阅读"],
+      "required_elements": ["术语定义", "主题地图", "由浅入深层次", "内部链接集群"],
+      "visuals": ["概念地图", "章节导航图"],
+      "faq_style": "覆盖基础、实践、比较和成本问题。",
+      "conclusion_style": "提供按基础水平划分的下一步阅读路径。"
+    },
+    "product-review": {
+      "purpose": "基于明确测试条件评价一个产品及其适用人群。",
+      "minimum_length": 2000,
+      "recommended_max_length": 3200,
+      "headline_patterns": ["X 评测：真实场景、优势与限制", "用了 X 之后：它适合谁，又不适合谁"],
+      "outline": ["评测结论", "测试条件", "核心场景", "优势", "限制", "价格与替代品", "适用人群"],
+      "required_elements": ["测试条件或证据范围", "实际使用场景", "优势与限制", "竞品或替代方案", "适用与不适用人群"],
+      "visuals": ["产品截图", "功能或价格对比表"],
+      "faq_style": "回答定价、隐私、迁移和替代品问题。",
+      "conclusion_style": "给出有条件的购买或试用建议。"
+    },
+    "thought-leadership": {
+      "purpose": "提出有证据支撑、能够回应主流观点的独立判断。",
+      "minimum_length": 2200,
+      "recommended_max_length": 3800,
+      "headline_patterns": ["X 正在变成 Y：真正值得关注的变化", "为什么关于 X 的主流判断忽略了 Y"],
+      "outline": ["中心论点", "主流观点", "关键证据", "独立解释", "最强反方", "影响与观察点"],
+      "required_elements": ["一句中心论点", "对主流观点的公平表述", "原创判断", "最强反方"],
+      "visuals": ["论点—证据关系图"],
+      "faq_style": "澄清论点边界和常见误读。",
+      "conclusion_style": "以未来观察点而非口号收束。"
+    },
+    "roundup": {
+      "purpose": "把多个专家、来源或事件组织成有编辑判断的主题综述。",
+      "minimum_length": 2000,
+      "recommended_max_length": 3200,
+      "headline_patterns": ["本期 X 观察：N 个信号与一个共同变化", "关于 X，值得读的 N 个观点"],
+      "outline": ["本期主题", "纳入标准", "分组综述", "共识与分歧", "编辑判断", "阅读清单"],
+      "required_elements": ["纳入时间范围", "选择标准", "去重后的来源", "共识与分歧"],
+      "visuals": ["来源地图或主题分组表"],
+      "faq_style": "解释来源选择、遗漏和更新频率。",
+      "conclusion_style": "总结共同模式并给出后续阅读顺序。"
+    },
+    "tutorial": {
+      "purpose": "让技术读者在明确环境中复现一个实现。",
+      "minimum_length": 2800,
+      "recommended_max_length": 4500,
+      "headline_patterns": ["用 X 实现 Y：完整可复现教程", "从环境配置到验证：构建 X"],
+      "outline": ["完成效果", "环境与版本", "架构或原理", "逐步实现", "运行与验证", "排错", "生产注意事项"],
+      "required_elements": ["环境和版本", "完整代码或命令", "预期输出", "验证步骤", "错误处理"],
+      "visuals": ["架构图", "终端输出或关键代码截图"],
+      "faq_style": "回答兼容性、错误信息和部署问题。",
+      "conclusion_style": "给出可运行检查清单和扩展方向。"
+    },
+    "news-analysis": {
+      "purpose": "快速解释一个近期事件发生了什么、为何重要以及接下来观察什么。",
+      "minimum_length": 1200,
+      "recommended_max_length": 2000,
+      "headline_patterns": ["X 发生了什么：影响、限制与下一步", "X 之后，真正改变的是什么"],
+      "outline": ["一句话结论", "带日期的事实", "背景", "影响", "不同观点", "后续观察"],
+      "required_elements": ["准确日期", "一手事件来源", "事实与分析分离", "受影响对象", "观察清单"],
+      "visuals": ["事件时间线或影响图"],
+      "faq_style": "用少量问答澄清事件事实和即时影响。",
+      "conclusion_style": "列出未来需要确认的三项信号。"
+    },
+    "data-research": {
+      "purpose": "用可追溯数据回答一个明确问题，并公开方法和限制。",
+      "minimum_length": 2800,
+      "recommended_max_length": 4500,
+      "headline_patterns": ["数据揭示的 X：方法、发现与限制", "我们分析了 X：三个发现和一个反例"],
+      "outline": ["研究问题", "数据与方法", "关键发现", "比较与基准", "反例", "限制", "实际含义"],
+      "required_elements": ["研究问题", "数据来源与时间", "方法", "可复核计算", "限制与反例"],
+      "visuals": ["带来源和单位的数据图", "方法流程图"],
+      "faq_style": "回答样本、口径、计算和可复现性问题。",
+      "conclusion_style": "区分数据支持的结论与仍不能回答的问题。"
+    },
+    "faq-knowledge": {
+      "purpose": "用可独立抽取的问答覆盖一个主题的高频知识需求。",
+      "minimum_length": 1800,
+      "recommended_max_length": 3000,
+      "headline_patterns": ["关于 X 的常见问题：完整答案", "X FAQ：从基础到实践"],
+      "outline": ["简短定义", "基础问题", "使用问题", "比较问题", "风险问题", "延伸阅读"],
+      "required_elements": ["问题按意图分组", "每个答案先给直接结论", "答案可脱离上下文阅读", "避免重复问题"],
+      "visuals": ["决策树或比较表"],
+      "faq_style": "正文即问答主体，每个答案简洁、自包含并带必要来源。",
+      "conclusion_style": "用问题导航和延伸阅读代替重复总结。"
+    }
+  }
+}

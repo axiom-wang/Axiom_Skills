@@ -1,0 +1,7 @@
+interface:
+  display_name: "Blog Writing Workflow"
+  short_description: "Research topics and draft source-grounded blog posts"
+  default_prompt: "Use $blog-writing-workflow to research a topic, select an angle, and draft a source-grounded blog post."
+
+policy:
+  allow_implicit_invocation: true
